@@ -1,26 +1,54 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-var currentTime;
-
+let time = parseInt(dayjs().format("H"));
+var currentHour = currentDate.getHours();
+var currentDate = new Date();
 
 $(document).ready(function() {
+  
   var current = dayjs();
   $("#currentDay").text(current.format("[Today is] MMMM dddd D, YYYY"));
   
   $(".saveBtn").click(function() {
-    
     var timeBlockId = $(this).parent().attr("id");
-    localStorage.setItem("timeBlockId", timeBlockId);
-
     
+    var value = $(this).siblings("textarea").val();
+    localStorage.setItem("timeBlockId" + timeBlockId, value);
 });
 
-let currentDate = new Date();
-let time = currentDate.getHours() + ":" + currentDate.getMinutes();
-console.log(time);
+var rows = document.getElementsByClassName("row");
+Array.from(rows).forEach(row => {
+  let
+    rowIdString = row.id,
+    rowHour;
+  if (rowIdString) {
+    rowHour = parseInt(rowIdString);
+  }
+  if (rowHour) {
 
-var toDo = document.querySelectorAll(".toDo");
+    if (time === rowHour) {
+      row.classList.add("present");
+      
+    } else if (time < rowHour) {
+      row.classList.add("future");
+    }
+    } else {
+      row.classList.add("past");
+    }
+  
+});
+
+function getInfo() {
+    $('#9 .description').val(localStorage.getItem('timeBlockId9'));
+    $('#10 .description').val(localStorage.getItem('timeBlockId10'));
+    $('#11 .description').val(localStorage.getItem('timeBlockId11'));
+    $('#12 .description').val(localStorage.getItem('timeBlockId12'));
+    $('#13 .description').val(localStorage.getItem('timeBlockId13'));
+    $('#14 .description').val(localStorage.getItem('timeBlockId14'));
+    $('#15 .description').val(localStorage.getItem('timeBlockId15'));
+    $('#16 .description').val(localStorage.getItem('timeBlockId16'));
+    $('#17 .description').val(localStorage.getItem('timeBlockId17'));
+}
+
+getInfo();
 // $(function () 
   // How can DOM traversal be used to get the "hour-x" id of the
   // time-block containing the button that was clicked? How might the id be
